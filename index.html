@@ -1,0 +1,633 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Guía DOM: HTML y JavaScript</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="css/style2.css">
+
+<header class="topbar">
+  <div class="topbar-in">
+    <button type="button" class="menu-btn" id="menuBtn" aria-controls="sidebar" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>Lecciones</button>
+    <button type="button" class="brand" data-go="inicio">
+      <span class="brand-mark">&lt;/&gt;</span>
+      <span class="brand-text"><b>Guía DOM</b><small>Conexión HTML y JavaScript</small></span>
+    </button>
+  </div>
+</header>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar" aria-label="Lecciones">
+    <nav id="nav"></nav>
+  </aside>
+  <div class="scrim" id="scrim" hidden></div>
+
+  <main class="content" id="content">
+
+<!-- ======================= PORTADA ======================= -->
+<section class="page" data-page="inicio" data-title="Presentación" data-mod="0" data-modname="Inicio">
+  <div class="cover">
+    <span class="kicker">Guía de aprendizaje · JavaScript</span>
+    <h1>Introducción a <mark>DOM</mark></h1>
+    <p class="lead">En esta guía vas a construir un proyecto en tres partes: un saludo que usa el DOM de cuatro formas distintas, un registro con dos campos y variables, y una conversión de números con <code>parseInt</code>, <code>parseFloat</code> y <code>Number</code>. Cada parte explica, en el momento en que la necesitas, el concepto de JavaScript que la hace funcionar.</p>
+    <div class="cover-actions">
+      <button type="button" class="btn" data-go="enlazar">Empezar →</button>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3 class="block-title">Ruta de aprendizaje</h3>
+    <div class="modules" id="moduleList"></div>
+  </div>
+
+</section>
+<section class="page" data-page="enlazar" data-title="Enlazar HTML, CSS y JS" data-mod="1" data-modname="Proyecto DOM" hidden>
+  <div class="lesson-head">
+    <span class="crumb">Proyecto DOM · Paso 1</span>
+    <h2>Enlazar el HTML con el CSS y el JavaScript</h2>
+  </div>
+
+  <div class="block">
+    <h3 class="block-title"><span class="bn">1</span>Los tres archivos</h3>
+    <p>Una página web se construye con tres lenguajes, y cada uno tiene un trabajo distinto. Si los mezclas en un solo archivo, el código se vuelve difícil de leer y de corregir. Por eso cada lenguaje va en su propio archivo.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Archivo</th><th>Lenguaje</th><th>Su trabajo</th></tr></thead>
+      <tbody>
+        <tr><td><code>index.html</code></td><td>HTML</td><td>Qué hay en la página: títulos, campos, botones.</td></tr>
+        <tr><td><code>css/style.css</code></td><td>CSS</td><td>Cómo se ve: colores, tamaños, espacios.</td></tr>
+        <tr><td><code>js/script.js</code></td><td>JavaScript</td><td>Qué hace: lo que pasa al hacer clic.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="block">
+    <h3 class="block-title"><span class="bn">2</span>La estructura de carpetas</h3>
+    <div class="explorer" role="img" aria-label="Carpeta DOM2 con una carpeta css que contiene style.css, una carpeta js que contiene script.js, y el archivo index.html en la raíz">
+      <div class="explorer-bar">Explorador de VS Code</div>
+      <ul>
+        <li class="hl"><svg class="ico" viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h5l2 2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z" fill="#89F336"/></svg><b>DOM2</b><em>carpeta principal del proyecto</em></li>
+        <li class="l1"><svg class="ico" viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h5l2 2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z" fill="#c8f39d"/></svg>css<em>carpeta para los estilos</em></li>
+        <li class="l2"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" fill="#fff" stroke="#9aa592" stroke-width="1.4"/><text x="12" y="15.5" font-size="6.5" text-anchor="middle" font-family="monospace" fill="#2965f1" font-weight="700">CSS</text></svg>style.css<em>el diseño</em></li>
+        <li class="l1"><svg class="ico" viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h5l2 2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z" fill="#c8f39d"/></svg>js<em>carpeta para JavaScript</em></li>
+        <li class="l2"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" fill="#fff" stroke="#9aa592" stroke-width="1.4"/><text x="12" y="15.5" font-size="7.5" text-anchor="middle" font-family="monospace" fill="#b08900" font-weight="700">JS</text></svg>script.js<em>el comportamiento</em></li>
+        <li class="l1"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" fill="#fff" stroke="#9aa592" stroke-width="1.4"/><text x="12" y="15" font-size="5.2" text-anchor="middle" font-family="monospace" fill="#e44d26" font-weight="700">HTML</text></svg>index.html<em>la estructura (va en la raíz)</em></li>
+      </ul>
+    </div>
+    <div class="callout warn">
+      <span class="lbl">Reglas para nombrar</span>
+      <ul>
+        <li>Sin espacios ni tildes: <code>script.js</code> sí; <code>mi script.js</code> no.</li>
+        <li>Mayúsculas y minúsculas importan: para el navegador <code>css</code> y <code>CSS</code> son carpetas distintas.</li>
+        <li>Revisa la extensión: si el archivo quedó como <code>style.css.txt</code>, no funcionará.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3 class="block-title"><span class="bn">3</span>Enlazar con &lt;link&gt; y &lt;script&gt;</h3>
+    <p>Crear los tres archivos no es suficiente: el <code>index.html</code> todavía no sabe que existen. Hay que <strong>enlazarlos</strong>, es decir, escribir en el HTML dónde están.</p>
+    <div class="pair">
+      <div class="callout"><span class="lbl">Para el CSS: &lt;link&gt;</span><p>Va dentro del <code>&lt;head&gt;</code>. El atributo <code>href</code> dice dónde está el archivo de estilos.</p></div>
+      <div class="callout"><span class="lbl">Para el JS: &lt;script&gt;</span><p>Va al final del <code>&lt;body&gt;</code>. El atributo <code>src</code> dice dónde está el archivo de JavaScript.</p></div>
+    </div>
+    <div class="anatomy">
+      <div class="code" data-lang="html"><div class="code-bar"><span class="file"><span class="dot"></span>index.html</span><button type="button" data-copy>Copiar</button></div><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Proyecto DOM&lt;/title&gt;
+    &lt;link rel="stylesheet" href="css/style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;main&gt;
+        &lt;!-- aquí van las secciones del proyecto --&gt;
+    &lt;/main&gt;
+
+    &lt;script src="js/script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+      <ol>
+        <li><span><code>lang="es"</code>: le dice al navegador que la página está en español.</span></li>
+        <li><span><code>href="css/style.css"</code>: se lee como "entra a la carpeta css y abre style.css".</span></li>
+        <li><span><code>src="js/script.js"</code>: "entra a la carpeta js y abre script.js". Va justo antes de <code>&lt;/body&gt;</code>.</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3 class="block-title"><span class="bn">4</span>¿Por qué el script va al final?</h3>
+    <p>El navegador lee el HTML <strong>de arriba hacia abajo</strong>, línea por línea, y va construyendo la página a medida que avanza. Si el script estuviera en el <code>&lt;head&gt;</code>, JavaScript intentaría buscar un campo de texto que el navegador todavía no ha leído, y no lo encontraría.</p>
+    <div class="pair">
+      <div><span class="tag bad">Script arriba</span><div class="callout"><p>JavaScript se ejecuta antes de que existan los inputs. Al buscarlos, recibe <code>null</code> y aparece un error.</p></div></div>
+      <div><span class="tag ok">Script al final</span><div class="callout"><p>Cuando JavaScript se ejecuta, el navegador ya leyó todo el HTML. Todos los elementos existen.</p></div></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ======================= PROYECTO · PARTE 1 ======================= -->
+<section class="page" data-page="parte1" data-title="Proyecto · Parte 1" data-mod="1" hidden>
+  <div class="lesson-head">
+    <span class="crumb">Proyecto DOM · Paso 2</span>
+    <h2>Proyecto · Parte 1: saludo con el DOM</h2>
+  </div>
+
+  <div class="block">
+    <h3 class="block-title"><span class="bn">1</span>¿Qué es el DOM?</h3>
+    <p>Tu archivo <code>index.html</code> es solo <strong>texto</strong>. Cuando el navegador lo abre, lo convierte en una <strong>representación en forma de árbol</strong> que JavaScript sí puede leer y modificar. Esa representación se llama <strong>DOM</strong> (Document Object Model): cada etiqueta se vuelve un objeto con propiedades que se pueden leer y cambiar.</p>
+    <div class="callout key">
+      <span class="lbl">Idea clave</span>
+      <p>En JavaScript, la palabra <code>document</code> representa la raíz del árbol, es decir, toda la página. <strong>Todo lo que hagas con el DOM empieza escribiendo <code>document</code>.</strong></p>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3 class="block-title"><span class="bn">2</span>Encontrar el campo: <code>id</code> y <code>getElementById</code></h3>
+    <p>Una página puede tener varios campos de texto. Para que JavaScript sepa cuál leer, cada campo necesita un nombre único: el atributo <strong>id</strong>, que no se puede repetir en la misma página.</p>
+    <div class="anatomy">
+      <div class="code" data-lang="js"><div class="code-bar"><span class="file"><span class="dot"></span>js/script.js</span></div><pre><code>document.getElementById("nombre")</code></pre></div>
+      <ol>
+        <li><span><code>document</code>: entra a la página (la raíz del árbol).</span></li>
+        <li><span><code>.getElementById</code>: "obtener elemento por id". Es la instrucción que busca.</span></li>
+        <li><span><code>("nombre")</code>: el id que quieres encontrar, entre comillas. Debe ser <strong>idéntico</strong> al del HTML.</span></li>
+      </ol>
+    </div>
+    <div class="callout warn"><span class="lbl">Atención a las mayúsculas</span><p>Se escribe <code>getElementById</code>: la <strong>E</strong>, la <strong>B</strong> y la <strong>I</strong> van en mayúscula. Y el id del HTML debe coincidir exactamente: <code>nombre</code> no es lo mismo que <code>Nombre</code>.</p></div>
+  </div>
+
+  <div class="block">
+    <h3 class="block-title"><span class="bn">3</span>Mostrar el resultado de cuatro formas</h3>
+    <p>Una vez encontrado el campo, puedes <strong>leer</strong> su valor o <strong>escribir</strong> en otro elemento. Este ejercicio muestra el mismo saludo de cuatro maneras distintas, para comparar cada una:</p>
+    <div class="tbl wide"><table>
+      <thead><tr><th>Instrucción</th><th>Qué hace</th></tr></thead>
+      <tbody>
+        <tr><td><code>alert(...)</code></td><td>Muestra el mensaje en una ventana emergente.</td></tr>
+        <tr><td><code>.value = ...</code></td><td>Escribe el texto dentro de un <code>input</code> (reemplaza lo que haya).</td></tr>
+        <tr><td><code>.innerText = ...</code></td><td>Inserta texto visible dentro de una etiqueta.</td></tr>
+        <tr><td><code>.innerHTML = ...</code></td><td>Inserta texto e <strong>interpreta</strong> las etiquetas HTML que traiga.</td></tr>
+        <tr><td><code>.textContent = ...</code></td><td>Inserta texto <strong>sin interpretar</strong> etiquetas HTML.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout warn"><span class="lbl">document.write()</span><p>Escribe directo en el documento, pero si se ejecuta después de que la página ya cargó, puede <strong>reemplazar toda la página</strong>. Por eso casi nunca se usa fuera de ejemplos como este.</p></div>
+  </div>
+
+  <div class="block">
+    <h3 class="block-title"><span class="bn">4</span>El ejercicio completo</h3>
+    <div class="code" data-lang="html"><div class="code-bar"><span class="file"><span class="dot"></span>index.html</span><button type="button" data-copy>Copiar</button></div><pre><code>&lt;section&gt;
+    &lt;form action=""&gt;
+        &lt;h3&gt;Primer Ejercicio DOM&lt;/h3&gt;
+
+        &lt;label for="nombre"&gt;Nombre: &lt;/label&gt;
+        &lt;input type="text" id="nombre" placeholder="Ingresar Nombre"&gt;
+
+        &lt;br&gt;
+        &lt;input type="text" id="resultado"&gt;
+
+        &lt;div id="resultado2"&gt;Aqui se mostrara el resultado 2&lt;/div&gt;
+
+        &lt;div id="resultado3"&gt;Aqui se mostrara el resultado 3&lt;/div&gt;
+
+        &lt;div id="resultado4"&gt;Aqui se mostrara el resultado 4&lt;/div&gt;
+        &lt;br&gt;
+
+        &lt;button type="button" onclick="saludar()"&gt; Aceptar&lt;/button&gt;
+        &lt;button type="reset"&gt;Cancelar&lt;/button&gt;
+
+    &lt;/form&gt;
+&lt;/section&gt;</code></pre></div>
+
+    <div class="code" data-lang="js"><div class="code-bar"><span class="file"><span class="dot"></span>js/script.js</span><button type="button" data-copy>Copiar</button></div><pre><code>function saludar() {
+
+    // .value permite leer el valor de un campo de formulario
+    let nombre = document.getElementById("nombre").value;
+
+    // 1. Mostrar información en una ventana emergente
+    alert(`Hola ${nombre}`);
+
+    // 2. Mostrar información dentro de un input
+    document.getElementById("resultado").value = `Hola, ${nombre}`;
+
+    // 3. .innerText inserta texto visible dentro de una etiqueta
+    document.getElementById("resultado2").innerText = `Hola, ${nombre}`;
+
+    // 4. .innerHTML interpreta las etiquetas HTML del texto
+    document.getElementById("resultado3").innerHTML =
+        `&lt;p style="color: red;"&gt;Hola, ${nombre}&lt;/p&gt;`;
+
+    // 5. .textContent inserta texto sin interpretar etiquetas
+    document.getElementById("resultado4").textContent = `Hola, ${nombre}`;
+
+    // 6. document.write() escribe directo en el documento (ver advertencia arriba)
+    document.write(`Hola, ${nombre}`);
+
+}</code></pre></div>
+
+    <div class="code" data-lang="css"><div class="code-bar"><span class="file"><span class="dot"></span>css/style.css</span><button type="button" data-copy>Copiar</button></div><pre><code>body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #ffffff;
+}
+
+section {
+    max-width: 480px;
+    margin: 24px auto;
+    padding: 20px;
+    border: 2px solid #89F336;
+    border-radius: 10px;
+}
+
+form {
+    display: grid;
+    gap: 10px;
+}
+
+input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+button {
+    background-color: #89F336;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#resultado2, #resultado3, #resultado4 {
+    padding: 8px;
+    border-radius: 6px;
+    background-color: #f3fde9;
+}</code></pre></div>
+  </div>
+
+  <div class="practice">
+    <div class="practice-head"><svg viewBox="0 0 24 24" fill="none" stroke="#3f7d0e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>Prueba tu proyecto</div>
+    <ul>
+      <li>El alert muestra "Hola" seguido de tu nombre.</li>
+      <li>El input, los dos div y el documento completo muestran el mismo saludo, cada uno a su manera.</li>
+      <li>Si cambias el id del input por otro distinto al del HTML, la consola muestra <code>Cannot read properties of null</code>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======================= PROYECTO · PARTE 2 ======================= -->
+<section class="page" data-page="parte2" data-title="Proyecto · Parte 2" data-mod="1" hidden>
+  <div class="lesson-head">
+    <span class="crumb">Proyecto DOM · Paso 3</span>
+    <h2>Proyecto · Parte 2: registro con variables y eventos</h2>
+  </div>
+
+  <div class="block">
+    <h3 class="block-title"><span class="bn">1</span>Variables: <code>let</code> y <code>const</code></h3>
+    <p>Cuando JavaScript lee un dato, necesita guardarlo en algún lugar para usarlo después. Ese lugar es una <strong>variable</strong>.</p>
+    <div class="pair">
+      <div class="callout key"><span class="lbl">const · constante</span><p>Guarda un valor que <strong>no se va a reemplazar</strong>.</p></div>
+      <div class="callout"><span class="lbl">let · variable</span><p>Guarda un valor que <strong>sí puede cambiar</strong> más adelante.</p></div>
+    </div>
+    <div class="callout"><span class="lbl">Sobre este ejercicio</span><p><code>registrar()</code> usa <code>let</code> para <code>nombre</code> y <code>programa</code>, aunque en este caso podría usar <code>const</code>: ninguno de los dos vuelve a cambiar dentro de la función. Regla práctica: empieza siempre con <code>const</code> y cámbiala a <code>let</code> solo si vas a reasignar la variable.</p></div>
+  </div>
+
+  <div class="block">
+    <h3 class="block-title"><span class="bn">2</span>Una función, dos campos</h3>
+    <p>Una <strong>función</strong> es un grupo de instrucciones con un nombre. Declararla (escribirla en <code>script.js</code>) no la ejecuta; para que corra hay que <strong>llamarla</strong> por su nombre con paréntesis. <code>registrar()</code> lee dos campos en vez de uno, y usa el mismo valor leído varias veces dentro de la misma plantilla de texto.</p>
+    <ul>
+      <li>Nombra la función con un <strong>verbo</strong> en camelCase: <code>registrar</code>, no <code>Registrar</code> ni <code>registro</code>.</li>
+      <li>Las variables creadas dentro de una función solo existen dentro de ella.</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3 class="block-title"><span class="bn">3</span><code>onclick</code> y por qué <code>type="button"</code></h3>
+    <p><code>onclick</code> conecta un evento con tu código: "cuando el usuario haga clic, ejecuta esta función". El nombre debe ser <strong>exactamente igual</strong> al de la función en <code>script.js</code>.</p>
+    <div class="tbl wide"><table>
+      <thead><tr><th>Código</th><th>Al hacer clic dentro de un form</th></tr></thead>
+      <tbody>
+        <tr><td><code>&lt;button type="submit"&gt;</code></td><td class="nan">Envía el formulario y recarga la página (se pierde el resultado).</td></tr>
+        <tr><td><code>&lt;button type="button"&gt;</code></td><td>Solo ejecuta su <code>onclick</code>.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout key"><span class="lbl">Regla</span><p>Si un botón está dentro de un <code>&lt;form&gt;</code> y su trabajo es ejecutar una función de JavaScript, escríbelo siempre con <code>type="button"</code>.</p></div>
+  </div>
+
+  <div class="block">
+    <h3 class="block-title"><span class="bn">4</span>El ejercicio completo</h3>
+    <div class="code" data-lang="html"><div class="code-bar"><span class="file"><span class="dot"></span>index.html</span><button type="button" data-copy>Copiar</button></div><pre><code>&lt;section&gt;
+    &lt;h3&gt;Segundo Ejercicio DOM&lt;/h3&gt;
+
+   &lt;form action=""&gt;
+        &lt;label for="nombre2"&gt;Nombre completo:&lt;/label&gt;
+        &lt;input type="text" id="nombre2"&gt;
+        &lt;label for="programa2"&gt;Programa de formación:&lt;/label&gt;
+        &lt;input type="text" id="programa2"&gt;
+        &lt;button onclick="registrar()" type="button"&gt;Registrar&lt;/button&gt;
+   &lt;/form&gt;
+
+    &lt;h2&gt;Resultados&lt;/h2&gt;
+
+    &lt;p&gt;Resultado en un input:&lt;/p&gt;
+    &lt;input type="text" id="resultado11" readonly&gt;
+    &lt;p id="resultado22"&gt;Resultado con innerText:&lt;/p&gt;
+    &lt;p id="resultado33"&gt;Resultado con innerHTML: &lt;/p&gt;
+    &lt;p id="resultado44"&gt;Resultado con textContent:&lt;/p&gt;
+&lt;/section&gt;</code></pre></div>
+    <div class="callout warn"><span class="lbl">Ids distintos a la Parte 1</span><p>Si esta sección vive en la misma página que la Parte 1, sus campos no pueden llamarse <code>nombre</code> otra vez: el id debe ser único en toda la página. Por eso aquí se usan <code>nombre2</code> y <code>programa2</code>.</p></div>
+
+    <div class="code" data-lang="js"><div class="code-bar"><span class="file"><span class="dot"></span>js/script.js</span><button type="button" data-copy>Copiar</button></div><pre><code>function registrar() {
+
+    // Obtener los datos ingresados por el usuario
+    let nombre = document.getElementById("nombre2").value;
+    let programa = document.getElementById("programa2").value;
+
+    // 1. Mostrar los datos en una ventana emergente
+    alert(`Aprendiz: ${nombre}\nPrograma: ${programa}`);
+
+    // 2. Mostrar la información en un input
+    document.getElementById("resultado11").value =
+        `${nombre} - ${programa}`;
+
+    // 3. Mostrar texto utilizando innerText
+    document.getElementById("resultado22").innerText =
+        `Nombre: ${nombre} | Programa: ${programa}`;
+
+    // 4. Mostrar contenido HTML con formato
+    document.getElementById("resultado33").innerHTML =
+        `&lt;p style="color: blue;"&gt;
+            &lt;strong&gt;Aprendiz:&lt;/strong&gt; ${nombre}&lt;br&gt;
+            &lt;strong&gt;Programa:&lt;/strong&gt; ${programa}
+        &lt;/p&gt;`;
+
+    // 5. Mostrar texto utilizando textContent
+    document.getElementById("resultado44").textContent =
+        `El aprendiz ${nombre} está inscrito en ${programa}.`;
+
+    // 6. Mostrar los datos en la consola del navegador
+    console.log("Nombre:", nombre);
+    console.log("Programa:", programa);
+
+}</code></pre></div>
+
+    <div class="code" data-lang="css"><div class="code-bar"><span class="file"><span class="dot"></span>css/style.css</span><button type="button" data-copy>Copiar</button></div><pre><code>/* Se agrega a lo que ya tenías en la Parte 1 */
+
+h2 {
+    color: #2f5e0a;
+}
+
+label {
+    font-weight: 600;
+    margin-right: 4px;
+}
+
+#resultado11 {
+    background-color: #f0f0f0;
+}
+
+#resultado22, #resultado33, #resultado44 {
+    padding: 8px;
+    border-radius: 6px;
+    background-color: #f3fde9;
+    margin: 6px 0;
+}</code></pre></div>
+  </div>
+
+  <div class="practice">
+    <div class="practice-head"><svg viewBox="0 0 24 24" fill="none" stroke="#3f7d0e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>Prueba tu proyecto</div>
+    <ul>
+      <li>El alert muestra el nombre y el programa juntos.</li>
+      <li>Los cuatro resultados muestran la misma información, con formatos distintos.</li>
+      <li>La consola (<kbd>F12</kbd>) muestra el nombre y el programa por separado.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======================= PROYECTO · PARTE 3 ======================= -->
+<section class="page" data-page="parte3" data-title="Proyecto · Parte 3" data-mod="1" hidden>
+  <div class="lesson-head">
+    <span class="crumb">Proyecto DOM · Paso 4</span>
+    <h2>Proyecto · Parte 3: convertir texto en números</h2>
+  </div>
+
+  <div class="block">
+    <h3 class="block-title"><span class="bn">1</span>Todo lo que viene de un input es texto</h3>
+    <p>JavaScript trabaja con distintos <strong>tipos de datos</strong>. Los dos que más usamos son <code>string</code> (texto, entre comillas) y <code>number</code> (número, sin comillas). Aquí está el detalle que causa más errores: <strong>la propiedad <code>.value</code> siempre devuelve texto</strong>, incluso si el input es <code>type="number"</code>.</p>
+    <p>Y el signo <code>+</code> se comporta distinto según el tipo:</p>
+    <div class="pair">
+      <div><span class="tag bad">Con textos: pega</span><div class="code" data-lang="js"><pre><code>"5" + "3"   // "53"</code></pre></div></div>
+      <div><span class="tag ok">Con números: suma</span><div class="code" data-lang="js"><pre><code>5 + 3       // 8</code></pre></div></div>
+    </div>
+    <div class="callout key"><span class="lbl">Conclusión</span><p>Antes de hacer cualquier operación matemática con un dato del formulario, conviértelo en número con <code>parseInt</code>, <code>parseFloat</code> o <code>Number</code>.</p></div>
+  </div>
+
+  <div class="block">
+    <h3 class="block-title"><span class="bn">2</span>parseInt, parseFloat y Number: compáralos</h3>
+    <p>Los tres convierten texto en número, pero cada uno se comporta distinto frente al mismo dato:</p>
+    <div class="tbl wide"><table>
+      <thead><tr><th>Entrada</th><th><code>parseInt</code></th><th><code>parseFloat</code></th><th><code>Number</code></th></tr></thead>
+      <tbody>
+        <tr><td><code>"25"</code></td><td class="r">25</td><td class="r">25</td><td class="r">25</td></tr>
+        <tr><td><code>"7.9"</code></td><td class="r">7</td><td class="r">7.9</td><td class="r">7.9</td></tr>
+        <tr><td><code>"12abc"</code></td><td class="r">12</td><td class="r">12</td><td class="r nan">NaN</td></tr>
+        <tr><td><code>""</code> (vacío)</td><td class="r nan">NaN</td><td class="r nan">NaN</td><td class="r">0</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li><code>parseInt</code> toma los dígitos de izquierda a derecha y <strong>corta</strong> en el primer carácter que no sea número; descarta los decimales.</li>
+      <li><code>parseFloat</code> hace lo mismo pero <strong>conserva</strong> los decimales.</li>
+      <li><code>Number</code> revisa el <strong>texto completo</strong>: si una sola parte no es válida, devuelve <code>NaN</code>; y un campo vacío se vuelve <code>0</code>, no <code>NaN</code>.</li>
+    </ul>
+    <div class="callout warn"><span class="lbl">¿Qué es NaN?</span><p>Significa <em>Not a Number</em>, "no es un número". Cualquier operación con <code>NaN</code> también da <code>NaN</code>.</p></div>
+  </div>
+
+  <div class="block">
+    <h3 class="block-title"><span class="bn">3</span>El ejercicio completo</h3>
+    <div class="code" data-lang="html"><div class="code-bar"><span class="file"><span class="dot"></span>index.html</span><button type="button" data-copy>Copiar</button></div><pre><code>&lt;section&gt;
+    &lt;form action=""&gt;
+        &lt;h3&gt;Tercer Ejercicio DOM: operaciones numéricas&lt;/h3&gt;
+
+        &lt;label for="valorUno"&gt;Valor 1: &lt;/label&gt;
+        &lt;input type="text" id="valorUno" placeholder="Ej: 15.8"&gt;
+
+        &lt;label for="valorDos"&gt;Valor 2: &lt;/label&gt;
+        &lt;input type="text" id="valorDos" placeholder="Ej: 4.25"&gt;
+        &lt;br&gt;
+
+        &lt;button type="button" onclick="calcularOperaciones()"&gt;Calcular&lt;/button&gt;
+        &lt;button type="reset"&gt;Cancelar&lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;h2&gt;Resultados&lt;/h2&gt;
+
+    &lt;p&gt;Con parseInt(): &lt;span id="resParseInt"&gt;&lt;/span&gt;&lt;/p&gt;
+    &lt;p&gt;Con parseFloat(): &lt;span id="resParseFloat"&gt;&lt;/span&gt;&lt;/p&gt;
+    &lt;p&gt;Con Number(): &lt;span id="resNumber"&gt;&lt;/span&gt;&lt;/p&gt;
+    &lt;p&gt;Suma usando parseFloat(): &lt;span id="resSuma"&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;/section&gt;</code></pre></div>
+
+    <div class="code" data-lang="js"><div class="code-bar"><span class="file"><span class="dot"></span>js/script.js</span><button type="button" data-copy>Copiar</button></div><pre><code>function calcularOperaciones() {
+
+    // Los dos campos llegan siempre como texto, sin importar lo que el usuario escriba
+    let valor1 = document.getElementById("valorUno").value;
+    let valor2 = document.getElementById("valorDos").value;
+
+    // 1. parseInt(): toma los dígitos y corta en el primer decimal
+    let entero1 = parseInt(valor1);
+    let entero2 = parseInt(valor2);
+    document.getElementById("resParseInt").textContent =
+        `parseInt("${valor1}") = ${entero1} | parseInt("${valor2}") = ${entero2}`;
+
+    // 2. parseFloat(): igual que parseInt, pero conserva los decimales
+    let decimal1 = parseFloat(valor1);
+    let decimal2 = parseFloat(valor2);
+    document.getElementById("resParseFloat").textContent =
+        `parseFloat("${valor1}") = ${decimal1} | parseFloat("${valor2}") = ${decimal2}`;
+
+    // 3. Number(): revisa el texto completo; si no es válido, da NaN
+    let numero1 = Number(valor1);
+    let numero2 = Number(valor2);
+    document.getElementById("resNumber").textContent =
+        `Number("${valor1}") = ${numero1} | Number("${valor2}") = ${numero2}`;
+
+    // 4. Suma usando los valores convertidos con parseFloat, para no perder decimales
+    let suma = decimal1 + decimal2;
+    document.getElementById("resSuma").textContent =
+        `${decimal1} + ${decimal2} = ${suma}`;
+
+}</code></pre></div>
+
+    <div class="code" data-lang="css"><div class="code-bar"><span class="file"><span class="dot"></span>css/style.css</span><button type="button" data-copy>Copiar</button></div><pre><code>/* Se agrega a lo que ya tenías en las partes 1 y 2 */
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #89F336;
+    box-shadow: 0 0 0 3px #e3fbcc;
+}
+
+#resParseInt, #resParseFloat, #resNumber, #resSuma {
+    font-weight: 600;
+    color: #2f5e0a;
+}</code></pre></div>
+  </div>
+
+  <div class="practice">
+    <div class="practice-head"><svg viewBox="0 0 24 24" fill="none" stroke="#3f7d0e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>Prueba tu proyecto</div>
+    <ul>
+      <li>Escribe <code>15.8</code> y <code>4.25</code>: compara cómo cambia cada resultado.</li>
+      <li>Deja un campo vacío: <code>parseInt</code> y <code>parseFloat</code> dan <code>NaN</code>, pero <code>Number</code> da <code>0</code>.</li>
+      <li>Escribe letras en un campo: solo <code>Number</code> rechaza el texto completo.</li>
+    </ul>
+  </div>
+
+  <div class="callout warn">
+    <span class="lbl">Errores comunes en estos tres ejercicios</span>
+    <ul>
+      <li><code>Cannot read properties of null</code>: el id del HTML y el de <code>getElementById</code> no coinciden (revisa mayúsculas).</li>
+      <li><code>saludar is not defined</code> (o <code>registrar</code>/<code>calcularOperaciones</code>): el nombre del <code>onclick</code> no es idéntico al de la función, o falta enlazar <code>script.js</code>.</li>
+      <li><code>Assignment to constant variable</code>: intentaste cambiar el valor de una <code>const</code>; usa <code>let</code>.</li>
+      <li>Resultado como <code>"53"</code> en vez de <code>8</code>: falta convertir el texto con <code>parseInt</code>, <code>parseFloat</code> o <code>Number</code> antes de sumar.</li>
+    </ul>
+  </div>
+</section>
+
+    <nav class="pager" id="pager" aria-label="Navegación entre lecciones"></nav>
+  </main>
+</div>
+
+<script>
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+/* ---------- Resaltado de código ---------- */
+var RX = {
+  js: [/(\/\/[^\n]*)|("(?:[^"\\\n]|\\.)*")|\b(function|const|let|var|if|else|return|document)\b|\b(\d+(?:\.\d+)?)\b|([A-Za-z_]\w*)(?=\()/g, ["c","s","k","nm","f"]],
+  html: [/(<!--[\s\S]*?-->)|(<\/?[A-Za-z!][\w-]*|\/?>)|(\s[\w-]+)(?==)|("[^"]*")/g, ["c","t","a","s"]],
+  css: [/(\/\*[\s\S]*?\*\/)|([^{}\n;]+)(?=\s*\{)|([\w-]+)(?=\s*:)|(#[0-9A-Fa-f]{3,6}\b|\b\d+(?:px|%)?\b)/g, ["c","t","f","s"]]
+};
+function highlight(src, lang){
+  var cfg = RX[lang]; if(!cfg) return esc(src);
+  var re = cfg[0], out = "", last = 0, m; re.lastIndex = 0;
+  while((m = re.exec(src))){
+    if(m[0] === ""){ re.lastIndex++; continue; }
+    var g = 1; while(g < m.length && m[g] === undefined) g++;
+    out += esc(src.slice(last, m.index)) + '<span class="' + cfg[1][g-1] + '">' + esc(m[0]) + '</span>';
+    last = re.lastIndex;
+  }
+  return out + esc(src.slice(last));
+}
+document.querySelectorAll(".code[data-lang]").forEach(function(box){
+  var el = box.querySelector("pre code");
+  el.innerHTML = highlight(el.textContent, box.getAttribute("data-lang"));
+});
+
+/* ---------- Navegación ---------- */
+var pages = Array.prototype.slice.call(document.querySelectorAll(".page"));
+var visited = {};
+try{ visited = JSON.parse(localStorage.getItem("guiaDomV3") || "{}") || {}; }catch(e){ visited = {}; }
+
+function buildNav(){
+  var html = "", mod = null, n = 0, modules = [];
+  pages.forEach(function(p){
+    if(p.dataset.mod !== mod){
+      if(mod !== null) html += "</ul></div>";
+      mod = p.dataset.mod;
+      var title = p.dataset.modname;
+      html += '<div class="mod"><p class="mod-title">' + (mod === "0" ? "" : "<span>M" + mod + "</span>") + esc(title) + '</p><ul class="nav-list">';
+      if(mod !== "0") modules.push({n:mod, title:title, first:p.dataset.page, lessons:[]});
+    }
+    if(mod !== "0") modules[modules.length-1].lessons.push(p.dataset.title);
+    var num = p.dataset.page === "inicio" ? "•" : String(++n);
+    html += '<li><button type="button" class="nav-link" data-go="' + p.dataset.page + '"><span class="st"><span>' + num + '</span></span><span>' + esc(p.dataset.title) + '</span></button></li>';
+  });
+  $("nav").innerHTML = html + "</ul></div>";
+  $("moduleList").innerHTML = modules.map(function(m){
+    return '<button type="button" class="module-row" data-go="' + m.first + '"><span class="mn">' + m.n + '</span><span><b>' + esc(m.title) + '</b><span class="d">' + esc(m.lessons.join(" · ")) + '</span></span><span class="count">' + m.lessons.length + ' lecciones</span></button>';
+  }).join("");
+}
+
+function show(id, opts){
+  var target = pages.filter(function(p){ return p.dataset.page === id; })[0] || pages[0];
+  id = target.dataset.page;
+  pages.forEach(function(p){ p.hidden = (p !== target); });
+  if(id !== "inicio"){ visited[id] = true; try{ localStorage.setItem("guiaDomV3", JSON.stringify(visited)); }catch(e){} }
+  document.querySelectorAll(".nav-link").forEach(function(a){
+    var d = a.dataset.go;
+    if(d === id) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current");
+    a.classList.toggle("visited", !!visited[d] && d !== "inicio");
+  });
+  var i = pages.indexOf(target), prev = pages[i-1], next = pages[i+1], ph = "";
+  ph += prev ? '<button type="button" class="prev" data-go="' + prev.dataset.page + '"><small>← Anterior</small><b>' + esc(prev.dataset.title) + '</b></button>' : '<span></span>';
+  if(next) ph += '<button type="button" class="next" data-go="' + next.dataset.page + '"><small>Siguiente →</small><b>' + esc(next.dataset.title) + '</b></button>';
+  $("pager").innerHTML = ph;
+  try{ if(location.hash.slice(1) !== id) history.replaceState(null, "", "#" + id); }catch(e){}
+  closeMenu();
+  if(!opts || !opts.noScroll) window.scrollTo(0, 0);
+}
+document.addEventListener("click", function(e){
+  var b = e.target.closest("[data-go]");
+  if(b){ e.preventDefault(); show(b.dataset.go); }
+});
+function closeMenu(){ $("sidebar").classList.remove("open"); $("scrim").hidden = true; $("menuBtn").setAttribute("aria-expanded","false"); }
+$("menuBtn").addEventListener("click", function(){
+  var open = !$("sidebar").classList.contains("open");
+  $("sidebar").classList.toggle("open", open); $("scrim").hidden = !open; this.setAttribute("aria-expanded", String(open));
+});
+$("scrim").addEventListener("click", closeMenu);
+document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeMenu(); });
+window.addEventListener("hashchange", function(){ var h = location.hash.slice(1); if(h) show(h); });
+
+/* Copiar */
+document.querySelectorAll("[data-copy]").forEach(function(btn){
+  btn.addEventListener("click", function(){
+    var pre = btn.closest(".code").querySelector("pre");
+    var done = function(){ btn.textContent = "Copiado"; setTimeout(function(){ btn.textContent = "Copiar"; }, 1500); };
+    var fallback = function(){ var r = document.createRange(); r.selectNodeContents(pre); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = "Usa Ctrl+C"; };
+    try{ navigator.clipboard.writeText(pre.innerText).then(done, fallback); }catch(e){ fallback(); }
+  });
+});
+
+buildNav();
+show(location.hash.slice(1) || "inicio", {noScroll:true});
+</script>
+
+</body></html>
