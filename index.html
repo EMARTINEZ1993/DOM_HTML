@@ -183,12 +183,6 @@
         &lt;br&gt;
         &lt;input type="text" id="resultado"&gt;
 
-        &lt;div id="resultado2"&gt;Aqui se mostrara el resultado 2&lt;/div&gt;
-
-        &lt;div id="resultado3"&gt;Aqui se mostrara el resultado 3&lt;/div&gt;
-
-        &lt;div id="resultado4"&gt;Aqui se mostrara el resultado 4&lt;/div&gt;
-        &lt;br&gt;
 
         &lt;button type="button" onclick="saludar()"&gt; Aceptar&lt;/button&gt;
         &lt;button type="reset"&gt;Cancelar&lt;/button&gt;
@@ -207,18 +201,6 @@
     // 2. Mostrar información dentro de un input
     document.getElementById("resultado").value = `Hola, ${nombre}`;
 
-    // 3. .innerText inserta texto visible dentro de una etiqueta
-    document.getElementById("resultado2").innerText = `Hola, ${nombre}`;
-
-    // 4. .innerHTML interpreta las etiquetas HTML del texto
-    document.getElementById("resultado3").innerHTML =
-        `&lt;p style="color: red;"&gt;Hola, ${nombre}&lt;/p&gt;`;
-
-    // 5. .textContent inserta texto sin interpretar etiquetas
-    document.getElementById("resultado4").textContent = `Hola, ${nombre}`;
-
-    // 6. document.write() escribe directo en el documento (ver advertencia arriba)
-    document.write(`Hola, ${nombre}`);
 
 }</code></pre></div>
 
@@ -363,9 +345,7 @@ button {
     document.getElementById("resultado44").textContent =
         `El aprendiz ${nombre} está inscrito en ${programa}.`;
 
-    // 6. Mostrar los datos en la consola del navegador
-    console.log("Nombre:", nombre);
-    console.log("Programa:", programa);
+
 
 }</code></pre></div>
 
